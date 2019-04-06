@@ -1,0 +1,79 @@
+//edited from week 5
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v3.json",
+  "data": {
+    "url": "data/movies.json"
+  },
+  "transform": [
+    {
+      "filter": {
+        "oneOf": [
+          "PG-13",
+          "PG",
+          "G",
+          "R"
+        ],
+        "field": "MPAA_Rating"
+      }
+    },
+    {
+      "filter": {
+        "oneOf": [
+          "Paramount Pictures",
+          "Warner Bros.",
+          "Walt Disney Pictures"
+        ],
+        "field": "Distributor"
+      }
+    }
+  ],
+  "facet": {
+    "row": {
+      "field": "MPAA_Rating",
+      "type": "nominal"
+    },
+    "column": {
+      "field": "Distributor",
+      "type": "nominal"
+    }
+  },
+  "spec": {
+    "mark": "bar",
+    "selection": {
+      "grid": {
+        "type": "interval",
+        "bind": "scales"
+      }
+    },
+    "encoding": {
+      "color": {
+        "field": "MPAA_Rating",
+        "type": "nominal",
+        "scale": {
+          "domain": [
+            "R",
+            "PG-13",
+            "G",
+            "PG"
+          ],
+          "range": [
+            "red",
+            "blue",
+            "green",
+            "pink"
+          ]
+        }
+      },
+      "x": {
+        "field": "IMDB_Rating",
+        "type": "quantitative",
+        "bin": true
+      },
+      "y": {
+        "aggregate": "sum",
+        "type": "quantitative",
+        "field": "Worldwide_Gross"
+      }
+    }
+  }
+}
